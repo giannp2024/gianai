@@ -43,7 +43,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Generate AI response
       const response = await openai.chat.completions.create({
-        model: "deepseek/deepseek-r1:free",
+        model: "deepseek/deepseek-chat",
         messages: [
           {
             role: "system",
