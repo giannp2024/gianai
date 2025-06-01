@@ -204,15 +204,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
 app.post("/api/messages", async (req, res) => {
   try {
-    console.log("[DEBUG] OPENROUTER_API_KEY:", process.env.OPENROUTER_API_KEY ? "✅ Existe" : "❌ No existe");
+    const messageData = insertMessageSchema.parse(req.body);
     
+    console.log("[DEBUG] OPENROUTER_API_KEY:", process.env.OPENROUTER_API_KEY ? "✅ Existe" : "❌ No existe");
+
     const response = await openai.chat.completions.create({
       model: "deepseek/deepseek-chat",
-      messages: [...]
+      messages: [
+        {
+          role: "system",
+          content: `You are Gian AI...` // Tu prompt del sistema
+        },
+        {
+          role: "user",
+          content: messageData.content
+        }
+      ]
     });
-    // ...
-  } catch (error) {
-    console.error("[DEBUG] Error completo:", JSON.stringify(error, null, 2));
-    res.status(500).json({ error: "Failed to process message" });
+  
   }
 });
