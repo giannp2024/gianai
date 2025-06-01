@@ -202,25 +202,3 @@ export async function registerRoutes(app: Express): Promise<Server> {
   return httpServer;
 }
 
-app.post("/api/messages", async (req, res) => {
-  try {
-    const messageData = insertMessageSchema.parse(req.body);
-    
-    console.log("[DEBUG] OPENROUTER_API_KEY:", process.env.OPENROUTER_API_KEY ? "✅ Existe" : "❌ No existe");
-
-    const response = await openai.chat.completions.create({
-      model: "deepseek/deepseek-chat",
-      messages: [
-        {
-          role: "system",
-          content: `You are Gian AI...` // Tu prompt del sistema
-        },
-        {
-          role: "user",
-          content: messageData.content
-        }
-      ]
-    });
-  
-  }
-});
